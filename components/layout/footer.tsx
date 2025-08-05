@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { FOOTER_LINKS, SOCIAL_LINKS, SITE_CONFIG } from '@/lib/constants'
 import { Mail, Linkedin, Instagram } from 'lucide-react'
+import Image from 'next/image'
 
 export function Footer() {
   return (
@@ -10,9 +11,13 @@ export function Footer() {
           {/* Marka */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/60">
-                <span className="text-primary-foreground font-bold text-sm">1</span>
-              </div>
+            <Image
+            src="/images/logo/logo.png"
+            alt={SITE_CONFIG.name}
+            width={55}
+            height={55}
+            className="rounded-md"
+          />
               <span className="font-bold text-xl gradient-text">{SITE_CONFIG.name}</span>
             </Link>
             <p className="mt-4 text-sm text-muted-foreground max-w-xs">

@@ -46,10 +46,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/contact/page.js"
     ],
+    "/search/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/search/page.js"
+    ],
     "/blog/[slug]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/blog/[slug]/page.js"
+    ],
+    "/tag/[slug]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/tag/[slug]/page.js"
     ]
   }
 }

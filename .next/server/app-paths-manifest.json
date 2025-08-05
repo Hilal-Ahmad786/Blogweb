@@ -1,8 +1,9 @@
 {
-  "/contact/page": "app/contact/page.js",
-  "/about/page": "app/about/page.js",
-  "/blog/page": "app/blog/page.js",
   "/page": "app/page.js",
+  "/blog/page": "app/blog/page.js",
+  "/categories/page": "app/categories/page.js",
+  "/tag/[slug]/page": "app/tag/[slug]/page.js",
+  "/about/page": "app/about/page.js",
   "/blog/[slug]/page": "app/blog/[slug]/page.js",
-  "/not-found": "app/not-found.js"
+  "/contact/page": "app/contact/page.js"
 }

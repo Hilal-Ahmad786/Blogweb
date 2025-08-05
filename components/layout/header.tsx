@@ -9,6 +9,7 @@ import { ThemeSwitcher } from './theme-switcher'
 import { MobileMenu } from './mobile-menu'
 import { NAVIGATION_ITEMS, SITE_CONFIG } from '@/lib/constants'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 
 export function Header() {
   const pathname = usePathname()
@@ -45,9 +46,13 @@ export function Header() {
             href="/" 
             className="flex items-center space-x-2 font-bold text-xl gradient-text focus-ring rounded-md px-2 py-1"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/60">
-              <span className="text-primary-foreground font-bold text-sm">1</span>
-            </div>
+           <Image
+            src="/images/logo/logo.png"
+            alt={SITE_CONFIG.name}
+            width={55}
+            height={55}
+            className="rounded-md"
+          />
             <span className="hidden sm:inline-block">{SITE_CONFIG.name}</span>
           </Link>
 
