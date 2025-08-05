@@ -8,16 +8,19 @@ export default async function HomePage() {
   const allPosts = await getAllPosts()
   const featuredPosts = allPosts.slice(0, 3)
 
-  const allTags = allPosts.flatMap(post => post.tags || [])
-  const tagCounts = allTags.reduce((acc, tag) => {
-    acc[tag] = (acc[tag] || 0) + 1
-    return acc
-  }, {} as Record<string, number>)
-  
-  const trendingTags = Object.entries(tagCounts)
-    .sort(([, a], [, b]) => b - a)
-    .slice(0, 10)
-    .map(([tag]) => tag)
+  // Use predefined relevant tags instead of calculating from posts
+  const personalDevelopmentTags = [
+    '100leşme',
+    'Kendini Tanıma', 
+    'Liderlik',
+    'Özgüven',
+    'Kişisel Gelişim',
+    'İç Ses',
+    'Yaşam Felsefesi',
+    'Kadın',
+    'İş Yaşamı',
+    'Motivasyon'
+  ]
 
   return (
     <div className="flex flex-col">
@@ -50,7 +53,7 @@ export default async function HomePage() {
               En çok ilgi gören konuları keşfedin ve kendinizi geliştirin.
             </p>
           </div>
-          <TrendingTags tags={trendingTags} />
+          <TrendingTags tags={personalDevelopmentTags} />
         </div>
       </section>
 

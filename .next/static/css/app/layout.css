@@ -1227,6 +1227,96 @@ video {
     padding-right: 2rem;
   }
 }
+.prose {
+  max-width: none;
+  color: hsl(var(--foreground));
+}
+.prose h1 {
+  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.prose h2 {
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.prose h3 {
+  margin-bottom: 0.75rem;
+  margin-top: 1.5rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+}
+.prose p {
+  margin-bottom: 1rem;
+  line-height: 1.625;
+}
+.prose ul {
+  margin-bottom: 1rem;
+  margin-left: 1.5rem;
+  list-style-type: disc;
+}
+.prose ol {
+  margin-bottom: 1rem;
+  margin-left: 1.5rem;
+  list-style-type: decimal;
+}
+.prose li {
+  margin-bottom: 0.5rem;
+}
+.prose blockquote {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-left-width: 4px;
+  border-color: hsl(var(--primary));
+  padding-left: 1rem;
+  font-style: italic;
+  color: hsl(var(--muted-foreground));
+}
+.prose strong {
+  font-weight: 600;
+  color: hsl(var(--foreground));
+}
+.prose em {
+  font-style: italic;
+}
+.prose code {
+  border-radius: 0.25rem;
+  background-color: hsl(var(--muted));
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+  font-family: var(--font-mono), Menlo, Monaco, monospace;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.prose pre {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  border-radius: var(--radius);
+  background-color: hsl(var(--muted));
+  padding: 1rem;
+}
+.prose hr {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border-color: hsl(var(--border));
+}
+.prose a {
+  color: hsl(var(--primary));
+}
+.prose a:hover {
+  text-decoration-line: underline;
+}
 .sr-only {
   position: absolute;
   width: 1px;
@@ -2179,6 +2269,9 @@ video {
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap');
 
+
+/* Add this to your existing app/globals.css file */
+
 .file\:border-0::file-selector-button {
   border-width: 0px;
 }
@@ -2580,7 +2673,6 @@ video {
     line-height: 1;
   }
 }
-
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ../../node_modules/.pnpm/next@14.0.4_react-dom@18.3.1_react@18.3.1/node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[11].oneOf[2].use[1]!../../node_modules/.pnpm/next@14.0.4_react-dom@18.3.1_react@18.3.1/node_modules/next/dist/build/webpack/loaders/next-font-loader/index.js??ruleSet[1].rules[11].oneOf[2].use[2]!../../node_modules/.pnpm/next@14.0.4_react-dom@18.3.1_react@18.3.1/node_modules/next/font/google/target.css?{"path":"app/layout.tsx","import":"Inter","arguments":[{"subsets":["latin"],"variable":"--font-inter","display":"swap"}],"variableName":"inter"} ***!
   \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/

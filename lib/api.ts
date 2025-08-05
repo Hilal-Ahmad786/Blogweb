@@ -1,10 +1,18 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import { remark } from 'remark'
+import remarkHtml from 'remark-html'
+import remarkGfm from 'remark-gfm'
 import { BlogPost, Author, Category, Tag, PostFrontmatter } from '@/types/blog'
 import { getReadingTime } from '@/lib/utils'
 
 const postsDirectory = path.join(process.cwd(), 'content/blog')
+
+// Configure remark processor
+const processor = remark()
+  .use(remarkGfm) // GitHub Flavored Markdown
+  .use(remarkHtml, { sanitize: false }) // Convert to HTML
 
 // Yazarlar veritabanı
 const authors: Record<string, Author> = {
@@ -47,6 +55,10 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     const { data, content } = matter(fileContents)
     const frontmatter = data as PostFrontmatter
 
+    // Process markdown content to HTML
+    const processedContent = await processor.process(content)
+    const htmlContent = processedContent.toString()
+
     const author = authors[frontmatter.author] || authors['seda-tokmak']
     const readingTime = getReadingTime(content)
     const excerpt = frontmatter.description || 
@@ -56,7 +68,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       slug,
       title: frontmatter.title,
       description: frontmatter.description,
-      content,
+      content: htmlContent, // Now this is proper HTML
       date: frontmatter.date,
       published: frontmatter.published ?? true,
       featured: frontmatter.featured ?? false,
@@ -92,7 +104,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
   }
 }
 
-// Diğer fonksiyonlar aynı kalıyor...
+// Keep all your other functions the same...
 export async function getPostsByCategory(categorySlug: string): Promise<BlogPost[]> {
   try {
     const allPosts = await getAllPosts()
@@ -206,3 +218,4 @@ export async function getAllTags(): Promise<Tag[]> {
     return []
   }
 }
+

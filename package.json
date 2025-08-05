@@ -33,7 +33,7 @@
     "react-hook-form": "^7.48.2",
     "reading-time": "^1.5.0",
     "remark": "^15.0.1",
-    "remark-gfm": "^4.0.0",
+    "remark-gfm": "^4.0.1",
     "remark-html": "^16.0.1",
     "swr": "^2.2.4",
     "tailwind-merge": "^2.2.0",

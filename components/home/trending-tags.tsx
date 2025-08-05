@@ -6,7 +6,24 @@ interface TrendingTagsProps {
 }
 
 export function TrendingTags({ tags }: TrendingTagsProps) {
-  if (!tags.length) {
+  // Filter out technical tags and keep only relevant personal development tags
+  const personalDevelopmentTags = [
+    '100leşme',
+    'Kendini Tanıma', 
+    'Liderlik',
+    'Özgüven',
+    'Kişisel Gelişim',
+    'İç Ses',
+    'Yaşam Felsefesi',
+    'Kadın',
+    'İş Yaşamı',
+    'Motivasyon'
+  ]
+  
+  // Use predefined tags or filter the passed tags
+  const displayTags = personalDevelopmentTags.slice(0, 10)
+
+  if (!displayTags.length) {
     return (
       <div className="text-center py-12">
         <p className="text-muted-foreground">Henüz etiket yok.</p>
@@ -16,7 +33,7 @@ export function TrendingTags({ tags }: TrendingTagsProps) {
 
   return (
     <div className="flex flex-wrap gap-3 justify-center">
-      {tags.map((tag, index) => (
+      {displayTags.map((tag, index) => (
         <Link key={tag} href={`/tag/${tag.toLowerCase().replace(/\s+/g, '-')}`}>
           <Badge
             variant="outline"
@@ -29,3 +46,4 @@ export function TrendingTags({ tags }: TrendingTagsProps) {
     </div>
   )
 }
+
