@@ -1,13 +1,4 @@
-import { serialize } from 'next-mdx-remote/serialize'
-import { MDXRemoteSerializeResult } from 'next-mdx-remote'
-import remarkGfm from 'remark-gfm'
-import remarkMath from 'remark-math'
-import rehypeKatex from 'rehype-katex'
-import rehypePrism from 'rehype-prism-plus'
-import rehypeSlug from 'rehype-slug'
-import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import remarkToc from 'remark-toc'
-import { visit } from 'unist-util-visit'
+// Basic MDX utility functions without external dependencies
 
 // Types
 export interface BlogPostFrontmatter {
@@ -31,18 +22,6 @@ export interface BlogPostFrontmatter {
   }
 }
 
-export interface ProcessedMDX {
-  mdxSource: MDXRemoteSerializeResult
-  frontmatter: BlogPostFrontmatter
-  readingTime: number
-  wordCount: number
-  headings: Array<{
-    id: string
-    title: string
-    level: number
-  }>
-}
-
 // Reading time calculation
 export function calculateReadingTime(text: string, wordsPerMinute: number = 200): number {
   const words = text.trim().split(/\s+/).length
@@ -55,38 +34,6 @@ export function calculateWordCount(text: string): number {
   return text.trim().split(/\s+/).filter(word => word.length > 0).length
 }
 
-// Extract headings from MDX content
-function extractHeadings() {
-  return (tree: any) => {
-    const headings: Array<{ id: string; title: string; level: number }> = []
-    
-    visit(tree, 'element', (node) => {
-      if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(node.tagName)) {
-        const level = parseInt(node.tagName.charAt(1))
-        const title = extractTextFromNode(node)
-        const id = generateHeadingId(title)
-        
-        headings.push({ id, title, level })
-      }
-    })
-    
-    return headings
-  }
-}
-
-// Extract text content from a node
-function extractTextFromNode(node: any): string {
-  if (node.type === 'text') {
-    return node.value
-  }
-  
-  if (node.children) {
-    return node.children.map(extractTextFromNode).join('')
-  }
-  
-  return ''
-}
-
 // Generate heading ID
 function generateHeadingId(title: string): string {
   return title
@@ -95,107 +42,6 @@ function generateHeadingId(title: string): string {
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
     .trim()
-}
-
-// Remark plugin to add reading time
-function remarkReadingTime() {
-  return (tree: any, file: any) => {
-    const textContent = extractTextContent(tree)
-    const readingTime = calculateReadingTime(textContent)
-    const wordCount = calculateWordCount(textContent)
-    
-    file.data = file.data || {}
-    file.data.readingTime = readingTime
-    file.data.wordCount = wordCount
-  }
-}
-
-// Extract text content from AST
-function extractTextContent(node: any): string {
-  if (node.type === 'text') {
-    return node.value
-  }
-  
-  if (node.children) {
-    return node.children.map(extractTextContent).join(' ')
-  }
-  
-  return ''
-}
-
-// Remark plugin to extract and store headings
-function remarkExtractHeadings() {
-  return (tree: any, file: any) => {
-    const headings: Array<{ id: string; title: string; level: number }> = []
-    
-    visit(tree, 'heading', (node) => {
-      const title = extractTextContent(node)
-      const id = generateHeadingId(title)
-      const level = node.depth
-      
-      headings.push({ id, title, level })
-    })
-    
-    file.data = file.data || {}
-    file.data.headings = headings
-  }
-}
-
-// Process MDX content
-export async function processMDX(
-  content: string,
-  frontmatter: BlogPostFrontmatter
-): Promise<ProcessedMDX> {
-  try {
-    const mdxSource = await serialize(content, {
-      mdxOptions: {
-        remarkPlugins: [
-          remarkGfm,
-          remarkMath,
-          remarkToc,
-          remarkReadingTime,
-          remarkExtractHeadings
-        ],
-        rehypePlugins: [
-          rehypeSlug,
-          [rehypeAutolinkHeadings, {
-            behavior: 'wrap',
-            properties: {
-              className: ['heading-link']
-            }
-          }],
-          [rehypePrism, {
-            showLineNumbers: true,
-            ignoreMissing: true
-          }],
-          rehypeKatex
-        ],
-        format: 'mdx'
-      },
-      parseFrontmatter: false
-    })
-
-    const readingTime = mdxSource.compiledSource.includes('readingTime') 
-      ? (mdxSource as any).readingTime || calculateReadingTime(content)
-      : calculateReadingTime(content)
-    
-    const wordCount = mdxSource.compiledSource.includes('wordCount')
-      ? (mdxSource as any).wordCount || calculateWordCount(content)
-      : calculateWordCount(content)
-    
-    const headings = (mdxSource as any).headings || []
-
-    return {
-      mdxSource,
-      frontmatter,
-      readingTime,
-      wordCount,
-      headings
-    }
-  } catch (error) {
-    console.error('Error processing MDX:', error)
-    throw new Error('Failed to process MDX content')
-  }
 }
 
 // Parse frontmatter from MDX content
@@ -296,6 +142,27 @@ function parseValue(value: string): any {
   }
   
   return unquoted
+}
+
+// Extract headings from content (simple version)
+export function extractHeadings(content: string): Array<{ id: string; title: string; level: number }> {
+  const headings: Array<{ id: string; title: string; level: number }> = []
+  const lines = content.split('\n')
+  
+  for (const line of lines) {
+    const trimmedLine = line.trim()
+    if (trimmedLine.startsWith('#')) {
+      const match = trimmedLine.match(/^(#{1,6})\s+(.+)$/)
+      if (match) {
+        const level = match[1].length
+        const title = match[2].trim()
+        const id = generateHeadingId(title)
+        headings.push({ id, title, level })
+      }
+    }
+  }
+  
+  return headings
 }
 
 // Generate table of contents from headings
@@ -423,4 +290,25 @@ export function optimizeImages(content: string): string {
   return content.replace(imageRegex, (match, alt, src) => {
     return `<Image src="${src}" alt="${alt}" width={800} height={400} className="rounded-lg" />`
   })
+}
+
+// Simple markdown to HTML conversion (basic)
+export function markdownToHtml(markdown: string): string {
+  let html = markdown
+    // Headers
+    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+    // Bold
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    // Italic
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    // Code
+    .replace(/`(.*?)`/g, '<code>$1</code>')
+    // Links
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+    // Paragraphs
+    .replace(/\n\n/g, '</p><p>')
+    
+  return `<p>${html}</p>`
 }

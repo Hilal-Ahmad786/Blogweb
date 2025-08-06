@@ -10,8 +10,11 @@
     "test": "vitest",
     "test:watch": "vitest --watch",
     "type-check": "tsc --noEmit",
-    "clean": "rm -rf .next dist node_modules/.cache"
+    "clean": "rm -rf .next dist node_modules/.cache",
+    "check-all": "npm run type-check && npm run lint && npm run build"
   },
+
+
   "dependencies": {
     "@mdx-js/loader": "^3.0.0",
     "@mdx-js/react": "^3.0.0",
