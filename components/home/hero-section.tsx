@@ -6,10 +6,14 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Sparkles, Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
+// Fixed fadeInUp variant - transition should be inside animate
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: [0.6, -0.05, 0.01, 0.99] }
+  animate: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: [0.6, -0.05, 0.01, 0.99] }
+  }
 }
 
 const staggerContainer = {
@@ -77,8 +81,8 @@ export function HeroSection() {
             <Button
               asChild
               size="lg"
-              variant="gradient"
-              className="group btn-hover-lift"
+              variant="default"
+              className="group btn-hover-lift bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
             >
               <Link href="/blog">
                 Yazıları Keşfet
@@ -89,8 +93,8 @@ export function HeroSection() {
             <Button
               asChild
               size="lg"
-              variant="glass"
-              className="btn-hover-lift"
+              variant="outline"
+              className="btn-hover-lift glass"
             >
               <Link href="/about">
                 Hakkımda
