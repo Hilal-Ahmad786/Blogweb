@@ -20,10 +20,10 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Claudia Blog - Modern Thoughts & Ideas',
-    template: '%s | Claudia Blog',
+    default: '100lesme | Kendimle 100leşme Hikayem',
+    template: '%s | 100lesme Blog',
   },
-  description: 'A modern blog platform showcasing cutting-edge web technologies, thoughtful design, and engaging content.',
+  description: 'Ben Seda. 100leşme yolculuğunun yazarı, yürüyeni ve en çok da tanığıyım. Bu blog, kendisiyle karşılaşmaya cesaret edenlerin sesi, kaybolduklarında yeniden yön bulanların haritası.',
 }
 
 export default function RootLayout({
