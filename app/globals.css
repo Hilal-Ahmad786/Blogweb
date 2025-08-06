@@ -187,3 +187,51 @@
   .btn-hover-lift:hover {
     transform: translateY(-2px);
   }
+
+
+  /* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Accent colors */
+.bg-accent {
+  background-color: #f1f5f9;
+}
+
+.dark .bg-accent {
+  background-color: #334155;
+}
+
+/* Animation keyframes */
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-in {
+  animation-fill-mode: forwards;
+}
+
+.slide-in-from-top-2 {
+  animation: slideInFromTop 200ms ease-out;
+}
+
+/* Dark mode support for existing styles */
+.dark {
+  color-scheme: dark;
+}
