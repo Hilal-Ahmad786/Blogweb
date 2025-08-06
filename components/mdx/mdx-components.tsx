@@ -109,13 +109,13 @@ const components: MDXComponents = {
   ),
 
   // Images
-  img: ({ src, alt, ...props }) => (
+  img: ({ src, alt, width, height, ...props }) => (
     <div className="mb-6">
       <Image
         src={src || ''}
         alt={alt || ''}
-        width={800}
-        height={400}
+        width={typeof width === 'number' ? width : 800}
+        height={typeof height === 'number' ? height : 400}
         className="rounded-lg w-full h-auto"
         {...props}
       />
